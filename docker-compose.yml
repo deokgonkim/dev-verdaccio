@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  dev-verdaccio:
+    image: dev/verdaccio
+    build:
+      context: ./docker/
+      dockerfile: Dockerfile
+    # env_file:
+    #   - .env.local
+    ports:
+      - 4873:4873
+    volumes:
+      - ./data:/data

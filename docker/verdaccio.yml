@@ -1,0 +1,52 @@
+---
+storage: "/data/storage"
+plugins: "/data/plugins"
+web:
+  title: Private NPM
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+packages:
+  "@*/*":
+    access: "$authenticated"
+    publish: "$authenticated"
+    proxy: npmjs
+  "**":
+    access: "$all"
+    publish: "$authenticated"
+    proxy: npmjs
+auth:
+  ldap:
+    type: ldap
+    # Only required if you are fetching groups that do not have a "cn" property. defaults to "cn" 
+    # groupNameAttribute: "ou"
+    # Optional, default false. 
+    cache:
+      # max credentials to cache (default to 100 if cache is enabled) 
+      size: 10
+      # cache expiration in seconds (default to 300 if cache is enabled) 
+      expire: 10
+    client_options:
+      url: "${LDAP_URL}"
+      # Only required if you need auth to bind 
+      # adminDn: "cn=admin,dc=example,dc=com"
+      # adminPassword: "admin"
+      # Search base for users 
+      searchBase: "${LDAP_SEARCH_BASE}"
+      searchFilter: "${LDAP_SEARCH_FILTER}"
+      # If you are using groups, this is also needed 
+      groupDnProperty: 'cn'
+      groupSearchBase: '${LDAP_GROUP_SEARCH_BASE}'
+      # If you have memberOf support on your ldap 
+      searchAttributes: ['*', 'member']
+      # Else, if you don't (use one or the other): 
+      # groupSearchFilter: '(memberUid={{dn}})' 
+      # Optional 
+      reconnect: true
+middlewares:
+  audit:
+    enabled: true
+logs:
+- type: stdout
+  format: pretty
+  level: http

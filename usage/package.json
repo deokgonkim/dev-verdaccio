@@ -1,0 +1,14 @@
+{
+  "name": "usage",
+  "version": "1.0.0",
+  "description": "In order to use NPM repository, you should set repository in your environment. [.npmrc](~/.npmrc)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dgkim/sample": "^1.0.2"
+  }
+}
